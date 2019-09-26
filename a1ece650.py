@@ -558,7 +558,6 @@ def main():
     print 'Finished reading input'
     return sys.exit(0)
         
-
     #     line = sys.stdin.readline()
     #     if line == '':
     #         break
