@@ -445,6 +445,10 @@ def main():
     while True:
         addinput = sys.stdin.readline()
         imatch = 'pp'
+
+        if (not (addinput and addinput.strip())):
+            # print('Its empty')
+            break
         
         checkinput = re.compile('^[acrg]')
         inputmatch = checkinput.finditer(addinput)
@@ -551,6 +555,8 @@ def main():
         else:
             print("Error: 'a', 'c', 'r', 'g' are the only commands allowed.")
             main()
+    print 'Finished reading input'
+    return sys.exit(0)
         
 
     #     line = sys.stdin.readline()
@@ -561,7 +567,7 @@ def main():
     # print 'Finished reading input'
 
     # return exit code 0 on successful termination
-    sys.exit(0)
+    # sys.exit(0)
 
 if __name__ == '__main__':
     main()
