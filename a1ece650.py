@@ -26,9 +26,6 @@ def streetinput(addinput):
 
     addstreet = re.compile('a\s"[A-Za-z]+(\s*[A-Za-z]*)*"\s((\(-?\d+,-?\d+\))+$)')
 
-    for key, value in Street.items():
-        aaa = key
-
     if addstreet.match(addinput):
         x1 = addinput.split('"')
         # print(x1)
@@ -39,8 +36,12 @@ def streetinput(addinput):
         #These are all the coordinates
         a3 = (x1[2]).replace(","," ")
 
-    
-    if aaa.lower() != a2.lower() and addstreet.match(addinput):
+    alower = 0
+    for key, value in Street.items():
+        if key.lower() == a2.lower():
+            alower = 1
+
+    if a2 not in Street and alower == 0 and addstreet.match(addinput):
 
         coorset = []
         numcheck = re.compile('-?\d+')
@@ -65,13 +66,14 @@ def streetinput(addinput):
         # print(xycoor)
         
         if len(coorset) < 4:
-            print('Not enough coordinates given.')
+            print('Error: not enough coordinates given.')
         else:
             Street[a2] = xycoor
         # print(Street)
         # print(len(coorset))
 
-    elif aaa.lower() == a2.lower():
+    # elif aaa.lower() == a2.lower():
+    elif alower == 1:
         print("Error: 'a' is to add a non-existing street.")
     
     else:
@@ -92,36 +94,43 @@ def changestreet(addinput):
         #These are all the coordinates
         c3 = (x2[2]).replace(" ","")
 
-        for key,value in Street.items():
-            a = key
-            if a.lower() == c2.lower():
-                # print('Good, this street exists.')
-                coorset = []
-                numcheck = re.compile('-?\d+')
-                matches = numcheck.finditer(c3)
-                for match in matches:
-                    a = float(match.group(0))
-                    #print(a)
-                    coorset.append(a)
-                
-                lencoorset = (len(coorset)/2)
-                x = 0
-                i = 0
-                xycoor = []
-                for num in coorset:
-                    if x < lencoorset:
-                        xx = coorset[i]
-                        yy = coorset[i+1]
-                        xy = (xx, yy)
-                        xycoor.append(xy)
-                        i += 2
-                        x += 1
-                # print(xycoor)
-                
-                if len(coorset) < 4:
-                    print('Not enough coordinates given.')
-                else:
-                    Street[c2] = xycoor
+        clower = 0
+        for key, value in Street.items():
+            if key.lower() == c2.lower():
+                clower = 1
+                c2 = key
+        # print(clower)     
+
+        # if c2 in Street and clower == 1 and changeinput.match(addinput):
+        if clower == 1 and changeinput.match(addinput):
+            coorset = []
+            numcheck = re.compile('-?\d+')
+            matches = numcheck.finditer(c3)
+            for match in matches:
+                a = float(match.group(0))
+                #print(a)
+                coorset.append(a)
+            
+            lencoorset = (len(coorset)/2)
+            x = 0
+            i = 0
+            xycoor = []
+            for num in coorset:
+                if x < lencoorset:
+                    xx = coorset[i]
+                    yy = coorset[i+1]
+                    xy = (xx, yy)
+                    xycoor.append(xy)
+                    i += 2
+                    x += 1
+            # print(xycoor)
+            
+            if len(coorset) < 4:
+                print('Not enough coordinates given.')
+            else:
+                Street[c2] = xycoor
+        else:
+            print("Error: 'c' only changes an existing street given in the correct format.")
 
         # print(Street)
     else:
@@ -140,10 +149,18 @@ def removestreet(addinput):
         r2 = x3[1]
         #These are all the coordinates
         r3 = (x3[2]).replace(" ","")
-        for key,value in Street.items():
-            a = key
-            if a.lower() == r2.lower():
-                del Street[r2]
+        
+        rlower = 0
+        for key, value in Street.items():
+            if key.lower() == r2.lower():
+                rlower = 1
+                r2 = key
+        # print(rlower)       
+
+        if r2 in Street and rlower == 1 and removeinput.match(addinput):
+            del Street[r2]
+        else:
+            print("Error: 'r', when given in the correct format, is to remove a street that already exists.")
         # print(Street)
     else:
         print("Error: 'r', when given in the correct format, is to remove a street that already exists.")
@@ -429,15 +446,10 @@ def moreedges():
                     Edges.remove((x,y))
     return None
 
-# YOUR CODE GOES HERE
+
+
 
 def main():
-    ### YOUR MAIN CODE GOES HERE
-
-    ### sample code to read from stdin.
-    ### make sure to remove all spurious print statements as required
-    ### by the assignment
-
     ccv = 1 #This is to create the indexes
     cc = 0 #This is to know if the first statement has already been run
     checker = 'no'
@@ -445,11 +457,11 @@ def main():
     while True:
         addinput = sys.stdin.readline()
         imatch = 'pp'
-
+        
         if (not (addinput and addinput.strip())):
             # print('Its empty')
             break
-        
+
         checkinput = re.compile('^[acrg]')
         inputmatch = checkinput.finditer(addinput)
         for match in inputmatch:
@@ -557,16 +569,6 @@ def main():
             main()
     print 'Finished reading input'
     return sys.exit(0)
-        
-    #     line = sys.stdin.readline()
-    #     if line == '':
-    #         break
-    #     print 'read a line:', line
 
-    # print 'Finished reading input'
-
-    # return exit code 0 on successful termination
-    # sys.exit(0)
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
