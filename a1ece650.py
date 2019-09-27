@@ -24,10 +24,7 @@ def streetinput(addinput):
     aaa = 'start'
     a2 = 'start'
 
-    #('a\s"[A-Za-z]+(\s*[A-Za-z]*)*"\s((\(\s*-?\d+,-?\d+\))+$)')
-    #('a\s"[A-Za-z]+(\s*[A-Za-z]*)*"\s((\(-?\d+,-?\d+\))+$)')
-    #('a\s"[A-Za-z]+(\s*[A-Za-z]*)*"\s(\(\s*-?\d+,\s*-?\d+\))((\s*(\(\s*-?\d+,\s*-?\d+\)))+$)')
-    addstreet = re.compile('a\s"\s*[A-Za-z]+(\s*[A-Za-z]*)*"\s(\(\s*-?\d+\s*,\s*-?\d+\s*\))((\s*(\(\s*-?\d+\s*,\s*-?\d+\s*\)))+$)')
+    addstreet = re.compile('a\s"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"\s(\(\s*-?\d+\s*,\s*-?\d+\s*\))((\s*(\(\s*-?\d+\s*,\s*-?\d+\s*\)))+$)')
 
     if addstreet.match(addinput):
         x1 = addinput.split('"')
@@ -81,14 +78,13 @@ def streetinput(addinput):
     
     else:
         print("Error: the format 'a' was inputted incorrectly.")
-    print(Street)
+    # print(Street)
     
 
 def changestreet(addinput):
     #print(Street)
 
-    #('c\s"[A-Za-z]+(\s*[A-Za-z]*)*"\s((\(-?\d+,-?\d+\))+$)')
-    changeinput = re.compile('c\s"\s*[A-Za-z]+(\s*[A-Za-z]*)*"\s(\(\s*-?\d+\s*,\s*-?\d+\s*\))((\s*(\(\s*-?\d+\s*,\s*-?\d+\s*\)))+$)')
+    changeinput = re.compile('c\s"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"\s(\(\s*-?\d+\s*,\s*-?\d+\s*\))((\s*(\(\s*-?\d+\s*,\s*-?\d+\s*\)))+$)')
     if changeinput.match(addinput):
         x2 = addinput.split('"')
         #This is the command c
@@ -136,7 +132,7 @@ def changestreet(addinput):
         else:
             print("Error: 'c' only changes an existing street given in the correct format.")
 
-        print(Street)
+        # print(Street)
     else:
         print("Error: 'c' only changes an existing street given in the correct format.")
 
@@ -144,7 +140,7 @@ def changestreet(addinput):
 def removestreet(addinput):
     # print("In Remove")
 
-    removeinput = re.compile('r\s"[A-Za-z]+(\s*[A-Za-z]*)*"')
+    removeinput = re.compile('r\s"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"')
     if removeinput.match(addinput):
         x3 = addinput.split('"')
         #This is the command c
@@ -165,7 +161,7 @@ def removestreet(addinput):
             del Street[r2]
         else:
             print("Error: 'r', when given in the correct format, is to remove a street that already exists.")
-        print(Street)
+        # print(Street)
     else:
         print("Error: 'r', when given in the correct format, is to remove a street that already exists.")
 
