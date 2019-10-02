@@ -24,7 +24,7 @@ def streetinput(addinput):
     aaa = 'start'
     a2 = 'start'
 
-    addstreet = re.compile('a\s"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"\s(\(\s*-?\d+\s*,\s*-?\d+\s*\))((\s*(\(\s*-?\d+\s*,\s*-?\d+\s*\)))+$)')
+    addstreet = re.compile('a\s+"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"\s(\(\s*-?\d+\s*,\s*-?\d+\s*\))((\s*(\(\s*-?\d+\s*,\s*-?\d+\s*\)))+$)')
 
     if addstreet.match(addinput):
         x1 = addinput.split('"')
@@ -84,7 +84,7 @@ def streetinput(addinput):
 def changestreet(addinput):
     #print(Street)
 
-    changeinput = re.compile('c\s"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"\s(\(\s*-?\d+\s*,\s*-?\d+\s*\))((\s*(\(\s*-?\d+\s*,\s*-?\d+\s*\)))+$)')
+    changeinput = re.compile('c\s+"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"\s(\(\s*-?\d+\s*,\s*-?\d+\s*\))((\s*(\(\s*-?\d+\s*,\s*-?\d+\s*\)))+$)')
     if changeinput.match(addinput):
         x2 = addinput.split('"')
         #This is the command c
@@ -140,7 +140,7 @@ def changestreet(addinput):
 def removestreet(addinput):
     # print("In Remove")
 
-    removeinput = re.compile('r\s"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"')
+    removeinput = re.compile('r\s+"\s*[A-Za-z\s]+(\s*[A-Za-z\s]*)*"')
     if removeinput.match(addinput):
         x3 = addinput.split('"')
         #This is the command c
@@ -470,25 +470,25 @@ def main():
             # print("We found a match.")
             imatch = 'pp'
 
-            checka = re.compile('a "')
+            checka = re.compile('a\s+"')
             amatch = checka.finditer(addinput)
             for match in amatch:
                 amatched = match.group(0)
-                if amatched == 'a "':
+                if amatched:
                     streetinput(addinput)
 
-            checkc = re.compile('c "')
+            checkc = re.compile('c\s+"')
             cmatch = checkc.finditer(addinput)
             for match in cmatch:
                 cmatched = match.group(0)
-                if cmatched == 'c "':
+                if cmatched:
                     changestreet(addinput)
 
-            checkr = re.compile('r "')
+            checkr = re.compile('r\s+"')
             rmatch = checkr.finditer(addinput)
             for match in rmatch:
                 rmatched = match.group(0)
-                if rmatched == 'r "':
+                if rmatched:
                     removestreet(addinput)
 
             checkg = re.compile('^g$')
@@ -512,8 +512,8 @@ def main():
                         for key,value in sorted(v.items()):
                             # print(value[0])
                             sys.stdout.write("\n  %d" %key)
-                            sys.stdout.write(" :  (%d" %value[0])
-                            sys.stdout.write(",%d)" %value[1])
+                            sys.stdout.write(" :  (%.2f" %value[0])
+                            sys.stdout.write(",%.2f)" %value[1])
                         sys.stdout.write("\n}")
                         # print('This is what is in v:\n' + str(v))
                         # print('This is what is in vbackup:\n' + str(vbackup))
@@ -557,12 +557,12 @@ def main():
                                         if i==len(Edges)-1:
                                             sys.stdout.write ("\n  <%d" %key1)
                                             sys.stdout.write (",%d" %key2)
-                                            sys.stdout.write( ">\n")
+                                            sys.stdout.write( ">")
                                         else:
                                             sys.stdout.write ("\n  <%d" %key1)
                                             sys.stdout.write (",%d" %key2)
                                             sys.stdout.write( ">,")
-                    sys.stdout.write ("\n}")
+                    sys.stdout.write ("\n}\n")
                     sys.stdout.flush()
         else:
             print("Error: 'a', 'c', 'r', 'g' are the only commands allowed.")
