@@ -567,7 +567,6 @@ def main():
         else:
             print("Error: 'a', 'c', 'r', 'g' are the only commands allowed.")
             main()
-    print 'Finished reading input'
     return sys.exit(0)
 
 if __name__ == "__main__":
