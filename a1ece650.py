@@ -539,8 +539,8 @@ def main():
                         sys.stdout.write("V = {")
                         for key,value in sorted(v.items()):
                             sys.stdout.write("\n  %d" %key)
-                            sys.stdout.write(" :  (%d" %value[0])
-                            sys.stdout.write(",%d)" %value[1])
+                            sys.stdout.write(" :  (%.2f" %value[0])
+                            sys.stdout.write(",%.2f)" %value[1])
                         sys.stdout.write("\n}")
                         # print('2This is what is in v:\n' + str(v))
                         # print('2This is what is in vbackup:\n' + str(vbackup))
@@ -562,7 +562,7 @@ def main():
                                             sys.stdout.write ("\n  <%d" %key1)
                                             sys.stdout.write (",%d" %key2)
                                             sys.stdout.write( ">,")
-                    sys.stdout.write ("}\n")
+                    sys.stdout.write ("\n}")
                     sys.stdout.flush()
         else:
             print("Error: 'a', 'c', 'r', 'g' are the only commands allowed.")
